@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>event capture</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            margin: 0;
+
+            display: flex;
+            justify-content: center;
+        }
+        #grandparent{
+            background-color: red;
+            width: 15rem;
+            height: 15rem;
+            padding: 2.5rem;
+        }
+        #parent{
+            background-color: green;
+            width: 10rem;
+            height: 10rem;
+            padding: 2.5rem;
+        }
+        #child{
+            background-color: orange;
+            width: 5rem;
+            height: 5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="grandparent">
+        <div id="parent">
+            <div id="child">
+
+            </div>
+        </div>
+    </div>
+    <script>
+        let grandparent = document.querySelector("#grandparent");
+        let parent = document.querySelector("#parent");
+        let child = document.querySelector("#child");
+        grandparent.addEventListener("click",(e)=>{
+            console.log("grandparent ");
+        },{capture:true});
+
+        parent.addEventListener("click",(e)=>{
+            console.log("parent ");
+        },{capture:true});
+
+        child.addEventListener("click",(e)=>{
+            console.log("child ");
+        },{capture:true});
+
+        document.addEventListener("click",(e)=>{
+            console.log("document ");
+        },{capture:true});
+    </script>
+</body>
+</html>
