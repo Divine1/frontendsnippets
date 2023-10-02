@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragg</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        *{
+            box-sizing: border-box;
+        }
+        .players,.sports{
+            border: 1px solid black;
+            padding: 1rem;
+        }
+        .player{
+            border: 1px solid blue;
+        }
+        .sports{
+
+        }
+        .sports .cricket{
+
+        }
+    </style>
+</head>
+<body>
+    <h1>dragg</h1>
+    <div>
+        <div class="players"  >
+            <div class="player" draggable="true">sachin</div>
+            <div class="player" draggable="true">dhoni</div>
+            <div class="player" draggable="true">kaif</div>
+            <div class="player" draggable="true">kholi</div>
+            <div class="player" draggable="true">anil</div>
+            <div class="player" draggable="true">rohit</div>
+        </div>
+        <div class="sports">
+            <h3>Cricket</h3>
+            <div class="cricket">
+                &nbsp;
+                <!-- <h4>available players</h4> -->
+            </div>
+
+        </div>
+    </div>
+    <script>
+        let player = document.querySelectorAll(".player");
+        console.log("player ",player)
+        let dragged = null;
+        player.forEach( (playerItem,i) =>{
+            playerItem.addEventListener("dragstart",(e)=>{
+                console.log("dragstart e ",e);
+                e.dataTransfer.setData("text/plain",e.target.innerText);
+                console.log("dragstart e.dataTransfer ",e.dataTransfer.getData("text/plain")," e.target.innerText ",e.target.innerText);
+
+                dragged = event.target;
+            });
+
+            playerItem.addEventListener("dragend",(e)=>{
+                e.preventDefault();
+                console.log("playerItem dragend e ",e);
+                console.log("playerItem dragend e.dataTransfer ",e.dataTransfer.getData("text/plain"));
+
+            })
+        });
+
+        let cricket = document.querySelector(".cricket");
+        cricket.addEventListener("dragover",(e)=>{
+            e.preventDefault();
+            //console.log("dragover e ",e);
+            //console.log("dragover e.dataTransfer ",e.dataTransfer.getData("text/plain"));
+
+        });
+
+        cricket.addEventListener("drop",(e)=>{
+            e.preventDefault();
+            console.log("cricket drop e ",e);
+            console.log("cricket drop e.dataTransfer ",e.dataTransfer.getData("text/plain"));
+            
+            const data = e.dataTransfer.items;
+            for (let i = 0; i < data.length; i++) {
+                console.log("cricket drop data ",data[i]);
+            }
+            dragged.removeAttribute("draggable");
+            e.target.appendChild(dragged);
+            dragged = null;
+        });
+
+        cricket.addEventListener("dragend",(e)=>{
+            console.log("cricket dragend e ",e);
+            console.log("cricket dragend e.dataTransfer ",e.dataTransfer.getData("text/plain"));
+
+        });
+
+        
+    </script>
+</body>
+</html>
